@@ -104,7 +104,7 @@ exports.deleteProductById = (req, res) => {
 exports.getAllProduct = async (req, res) => {
   const products = await Product.find({})
     .select(
-      "_id name price quantity slug description productPictures category size color"
+      "_id name price quantity slug description productPictures category size color isSale salePercent"
     )
     .populate({ path: "category", select: "_id name" })
     .exec();
@@ -204,6 +204,23 @@ exports.getAllReview = async (req, res) => {
       success: true,
       reviews: product.reviews,
     });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+exports.updateSale = async (req, res) => {
+  try {
+    const saledProduct = {
+      isSale: req.body.isSale,
+      salePercent: req.body.salePercent,
+    };
+    await Product.findByIdAndUpdate(req.params.id, saledProduct, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+    res.status(200).json({ success: true });
   } catch (error) {
     res.status(400).json(error);
   }

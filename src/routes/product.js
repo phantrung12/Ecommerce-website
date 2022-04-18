@@ -9,6 +9,7 @@ const {
   deleteProductById,
   addReview,
   getAllReview,
+  updateSale,
 } = require("../controllers/productCtrl");
 const {
   requireSignin,
@@ -70,6 +71,13 @@ router.post(
   requireSignin,
   adminMiddleware,
   deleteProductById
+);
+
+router.put(
+  "/product/updatesale/:id",
+  requireSignin,
+  adminMiddleware,
+  updateSale
 );
 
 // router.get("/product/getCate", getCategories);

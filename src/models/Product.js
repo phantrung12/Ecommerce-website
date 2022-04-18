@@ -12,9 +12,14 @@ const productSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    isSale: { type: Boolean, default: false },
+    salePercent: { type: Number, default: 0 },
     price: {
       type: Number,
       required: true,
+    },
+    salePrice: {
+      type: Number,
     },
     quantity: {
       type: Number,
